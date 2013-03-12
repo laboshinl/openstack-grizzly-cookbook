@@ -29,8 +29,8 @@ bash "synchronise nova database" do
 	CODE
 end 
 
-["nova-cert", "nova-api", "nova-scheduler", "nova-consoleauth", "nova-objectstore"].each do |pkg|
-	service pkg do
+%w[nova-cert nova-api nova-scheduler nova-consoleauth nova-objectstore].each do |srv|
+	service srv do
 		action :restart
 	end
 end
