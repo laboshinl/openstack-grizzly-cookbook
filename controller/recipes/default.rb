@@ -1,0 +1,13 @@
+include_recipe "controller::set_attributes"
+include_recipe "controller::ip_forwarding"
+include_recipe "controller::ntp"
+include_recipe "controller::repositories"
+include_recipe "controller::mysql-server"
+include_recipe "controller::keystone"
+include_recipe "controller::glance"
+include_recipe "controller::cinder"
+include_recipe "controller::rabbitmq-server"
+include_recipe "controller::nova"
+include_recipe "controller::dashboard"
+#include_recipe "controller::swift"
+
