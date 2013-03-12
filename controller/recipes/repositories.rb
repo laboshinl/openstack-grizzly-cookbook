@@ -3,10 +3,17 @@ execute "apt-get update" do
 end
 
 # OpenStack 'Grizzly' repository key
+#bash "add Grizzly key" do
+	#code <<-CODE
+	#gpg --keyserver keyserver.ubuntu.com --recv EC4926EA 
+	#gpg --export --armor EC4926EA | apt-key add -
+	#CODE
+#end
+
 bash "add Grizzly key" do
 	code <<-CODE
-	gpg --keyserver keyserver.ubuntu.com --recv EC4926EA 
-	gpg --export --armor EC4926EA | apt-key add -
+	gpg --keyserver keyserver.ubuntu.com --recv 3B6F61A6 
+	gpg --export --armor 3B6F61A6 | apt-key add -
 	CODE
 end
 
