@@ -1,4 +1,6 @@
 [DEFAULT]
+volume_driver=cinder.volume.driver.RBDDriver
+rbd_pool=volumes
 rootwrap_config = /etc/cinder/rootwrap.conf
 sql_connection = mysql://root:<%= node[:admin][:password] %>@<%= node[:controller][:private_ip] %>/cinder
 api_paste_confg = /etc/cinder/api-paste.ini

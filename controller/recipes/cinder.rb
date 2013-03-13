@@ -5,8 +5,10 @@ bash "create database for cinder" do
 		CODE
 end
 
-package "cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient" do
+%w[cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient ceph-common].each do |pkg|
+	package pkg do
 		action :install
+	end
 end
 
 bash "enable iscsi" do
@@ -32,6 +34,13 @@ end
 bash "syncronise cinder database" do
 	code <<-CODE
 	cinder-manage db sync
+	CODE
+end
+
+bash "add ceph setting" do
+    not_if("cat /etc/init/cinder-volume.conf | grep 'id volumes' | grep CEPH_ARGS")
+	code <<-CODE
+	sed -i '1ienv CEPH_ARGS="--id volumes"' /etc/init/cinder-volume.conf
 	CODE
 end
 

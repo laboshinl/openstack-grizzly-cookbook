@@ -9,7 +9,7 @@
 # in a request to add a new image to Glance? Known schemes are determined
 # by the known_stores option below.
 # Default: 'file'
-default_store = file
+default_store = rdb
 
 # List of which store classes and store class locations are
 # currently known to glance at startup.
@@ -83,7 +83,7 @@ workers = 1
 # file system store a URL of 'file:///path/to/image' will
 # be returned to the user in the 'direct_url' meta-data field.
 # The default value is false.
-#show_image_direct_url = False
+show_image_direct_url = True
 
 # ================= Syslog Options ============================
 
@@ -312,7 +312,7 @@ s3_store_create_bucket_on_put = False
 rbd_store_ceph_conf = /etc/ceph/ceph.conf
 
 # RADOS user to authenticate as (only applicable if using cephx)
-rbd_store_user = glance
+rbd_store_user = images
 
 # RADOS pool in which images are stored
 rbd_store_pool = images

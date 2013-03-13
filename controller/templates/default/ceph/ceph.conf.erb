@@ -1,0 +1,27 @@
+[global]
+	
+	auth cluster required = none
+	auth service required = none
+	auth client required = none
+
+[osd]
+
+	osd journal size = 1000
+	filestore xattr use omap = true
+
+	#osd mkfs type = ext4
+	#osd mount options ext4 = user_xattr,rw,noexec,nodev,noatime,nodiratime,data=writeback,barrier=0
+
+[mon.a]
+
+	host = <%= require 'socket'; Socket.gethostname %>
+	mon addr = <%= node[:controller][:private_ip] %>:6789
+
+[osd.0]
+
+	host = <%= require 'socket'; Socket.gethostname %>	
+	#devs = /dev/<%= node[:volume_group][:name] %>/ceph
+
+[mds.a]
+
+	host = <%= require 'socket'; Socket.gethostname %>
