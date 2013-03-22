@@ -31,7 +31,6 @@ bash "lvcreate" do
 	mkcephfs -a -c /etc/ceph/ceph.conf
 	service ceph -a restart
 	ceph osd pool create volumes 128
-	ceph osd pool create images 128
 	CODE
 end
 

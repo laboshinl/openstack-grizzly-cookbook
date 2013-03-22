@@ -1,3 +1,5 @@
-package "openstack-dashboard memcached node-less" do
-	action :install
+%w[openstack-dashboard memcached node-less].each do |pkg|
+	package pkg do
+		action :install
+	end
 end

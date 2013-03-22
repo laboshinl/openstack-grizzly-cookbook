@@ -2,13 +2,13 @@ execute "apt-get update" do
 	action :nothing
 end
 
-# OpenStack 'Grizzly' repository key
-#bash "add Grizzly key" do
-	#code <<-CODE
-	#gpg --keyserver keyserver.ubuntu.com --recv EC4926EA 
-	#gpg --export --armor EC4926EA | apt-key add -
-	#CODE
-#end
+#OpenStack 'Grizzly' repository key
+bash "add Grizzly key" do
+	code <<-CODE
+	gpg --keyserver keyserver.ubuntu.com --recv EC4926EA 
+	gpg --export --armor EC4926EA | apt-key add -
+	CODE
+end
 
 bash "add Grizzly key" do
 	code <<-CODE
@@ -24,6 +24,7 @@ bash "add Ceph key" do
 	gpg --export --armor 17ED316D | apt-key add -
 	CODE
 end 
+
 
 # Updated list of Ubuntu repositories	 
 template "/etc/apt/sources.list" do

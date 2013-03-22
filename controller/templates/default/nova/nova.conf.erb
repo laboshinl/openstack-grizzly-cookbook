@@ -1,11 +1,17 @@
 [DEFAULT]
 
+# Ceilometer #
+instance_usage_audit=True
+instance_usage_audit_period=hour
+notification_driver=nova.openstack.common.notifier.rpc_notifier
+notification_driver=ceilometer.compute.nova_notifier
+
 # SQL Connection #
 sql_connection=mysql://root:<%= node[:admin][:password] %>@<%= node[:controller][:private_ip] %>/nova
 
 # nova-scheduler #
 rabbit_host=<%= node[:controller][:private_ip] %>
-scheduler_driver= nova.scheduler.filter_scheduler.FilterScheduler
+compute_scheduler_driver= nova.scheduler.filter_scheduler.FilterScheduler
 
 # nova-api #
 cc_host=<%= node[:controller][:public_ip] %>
@@ -45,7 +51,7 @@ glance_api_servers=<%= node[:controller][:public_ip] %>:9292
 image_service=nova.image.glance.GlanceImageService
 
 # novnc #
-novnc_enable=true
+novnc_enabled=true
 novncproxy_base_url=http://<%= node[:controller][:public_ip] %>:6080/vnc_auto.html
 vncserver_proxyclient_address=127.0.0.1
 vncserver_listen=0.0.0.0
