@@ -6,15 +6,14 @@ bash "create database for ceilometer" do
 end
 
 %w[ceilometer-agent-central ceilometer-agent-compute ceilometer-api ceilometer-collector ceilometer-common python-ceilometer mongodb].each do |pkg|
-	package |pkg| do
+	package pkg do
 		action :install
 	end
-endap
+end
 
-template "/etc/ceilometer/ceilometer.conf do
+template "/etc/ceilometer/ceilometer.conf" do
 	source "ceilometer/ceilometer.conf.erb"
 	owner "root"
 	group "root"
 	mode "0644"
 end
-

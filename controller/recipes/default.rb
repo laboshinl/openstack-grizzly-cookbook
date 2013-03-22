@@ -13,5 +13,4 @@ include_recipe "controller::openvswitch"
 include_recipe "controller::quantum"
 include_recipe "controller::nova"
 include_recipe "controller::dashboard"
-
-
+include_recipe "controller::ceilometer"
