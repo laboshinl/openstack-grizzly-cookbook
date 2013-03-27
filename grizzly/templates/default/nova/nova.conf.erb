@@ -50,8 +50,8 @@ image_service=nova.image.glance.GlanceImageService
 novnc_enabled=true
 novncproxy_base_url=http://<%= node[:controller][:public_ip] %>:6080/vnc_auto.html
 xvpvncproxy_base_url=http://<%= node[:controller][:public_ip] %>:6081/console
-vncserver_proxyclient_address=127.0.0.1
-vncserver_listen=0.0.0.0
+vncserver_proxyclient_address=<%= require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} %> 
+vncserver_listen=<%= require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} %> 
 
 # Misc #
 logdir=/var/log/nova

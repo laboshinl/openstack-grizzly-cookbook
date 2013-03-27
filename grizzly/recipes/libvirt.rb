@@ -1,3 +1,9 @@
+%w[libvirt-bin pm-utils].each do |pkg|
+	package pkg do
+		action :install
+	end
+end
+
 template "/etc/libvirt/qemu.conf" do
 	source "libvirt/qemu.conf"
 	owner "nova"

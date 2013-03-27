@@ -1,7 +1,5 @@
-%w[nova-compute-kvm pm-utils].each do |pkg|
-	package pkg do
+package "nova-compute" do
 		action :install
-	end
 end
 
 package "nova-api-metadata" do

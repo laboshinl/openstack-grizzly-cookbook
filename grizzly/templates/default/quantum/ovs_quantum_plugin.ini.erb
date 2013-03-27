@@ -15,5 +15,5 @@ tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 integration_bridge = br-int
 tunnel_bridge = br-tun
-local_ip = <%= require 'socket'; UDPSocket.open {|s| s.connect("8.8.8.8", 1); s.addr.last} %>  
+local_ip = <%= require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} %>  
 
