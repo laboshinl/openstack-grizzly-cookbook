@@ -1,0 +1,45 @@
+catalog.RegionOne.identity.publicURL = http://<%= node[:controller][:public_ip] %>:$(public_port)s/v2.0
+catalog.RegionOne.identity.adminURL = http://<%= node[:controller][:public_ip] %>:$(admin_port)s/v2.0
+catalog.RegionOne.identity.internalURL = http://<%= node[:controller][:private_ip] %>:$(public_port)s/v2.0
+catalog.RegionOne.identity.name = Identity Service
+
+catalog.RegionOne.compute.publicURL = http://<%= node[:controller][:public_ip] %>:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.adminURL = http://<%= node[:controller][:public_ip] %>:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.internalURL = http://<%= node[:controller][:private_ip] %>:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.name = Compute Service
+
+catalog.RegionOne.volume.publicURL = http://<%= node[:controller][:public_ip] %>:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.adminURL = http://<%= node[:controller][:public_ip] %>:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.internalURL = http://<%= node[:controller][:private_ip] %>:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.name = Volume Service
+
+catalog.RegionOne.ec2.publicURL = http://<%= node[:controller][:public_ip] %>:8773/services/Cloud
+catalog.RegionOne.ec2.adminURL = http://<%= node[:controller][:public_ip] %>:8773/services/Admin
+catalog.RegionOne.ec2.internalURL = http://<%= node[:controller][:private_ip] %>:8773/services/Cloud
+catalog.RegionOne.ec2.name = EC2 Service
+
+catalog.RegionOne.image.publicURL = http://<%= node[:controller][:public_ip] %>:9292/v1
+catalog.RegionOne.image.adminURL = http://<%= node[:controller][:public_ip] %>:9292/v1
+catalog.RegionOne.image.internalURL = http://<%= node[:controller][:private_ip] %>:9292/v1
+catalog.RegionOne.image.name = Image Service
+
+catalog.RegionOne.object_store.publicURL = http://<%= node[:controller][:public_ip] %>:8080/v1/AUTH_$(tenant_id)s
+catalog.RegionOne.object_store.adminURL = http://<%= node[:controller][:public_ip] %>:8080/
+catalog.RegionOne.object_store.internalURL = http://<%= node[:controller][:private_ip] %>:8080/v1/AUTH_$(tenant_id)s
+catalog.RegionOne.object_store.name = S3 Service
+
+catalog.RegionOne.network.publicURL = http://<%= node[:controller][:public_ip] %>:9696
+catalog.RegionOne.network.adminURL = http://<%= node[:controller][:public_ip] %>:9696
+catalog.RegionOne.network.internalURL = http://<%= node[:controller][:private_ip] %>:9696
+catalog.RegionOne.network.name = Network Service 
+
+catalog.RegionOne.orchestration.publicURL = http://<%= node[:controller][:public_ip] %>:8004/v1/$(tenant_id)s
+catalog.RegionOne.orchestration.adminURL = http://<%= node[:controller][:public_ip] %>/v1/$(tenant_id)s
+catalog.RegionOne.orchestration.internalURL = http://<%= node[:controller][:private_ip] %>:8004/v1/$(tenant_id)s
+catalog.RegionOne.orchestration.name = Heat Service
+
+catalog.RegionOne.metering.publicURL = http://<%= node[:controller][:public_ip] %>:8777
+catalog.RegionOne.metering.adminURL = http://<%= node[:controller][:public_ip] %>:8777
+catalog.RegionOne.metering.internalURL = http://<%= node[:controller][:private_ip] %>:8777
+catalog.RegionOne.metering.name = Ceilometer Service
+
