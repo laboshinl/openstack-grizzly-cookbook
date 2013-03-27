@@ -1,3 +1,11 @@
+Attributes
+==========
+
+See the `attributes/default.rb` for default values. 
+
+Usage
+=====
+
 Controller node.json: ::
 
 	{
