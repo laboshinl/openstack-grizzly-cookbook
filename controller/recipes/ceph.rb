@@ -2,16 +2,6 @@ package "ceph" do
 	action :install
 end
 
-bash "lvcreate" do
-	not_if("lvdisplay | grep ceph")
-	code <<-CREATE
-		unit=$(vgdisplay #{node[:volume_group][:name]} | grep Free |  awk '{print $8}')
-		size=$(vgdisplay #{node[:volume_group][:name]} | grep Free |  awk '{print $7}')
-		ceph=$(echo "$size*0.5" | bc)
-		lvcreate -n ceph -L 0$ceph$unit #{node[:volume_group][:name]}
-	CREATE
-end
-
 template "/etc/ceph/ceph.conf" do
 	owner "root"
 	mode "0644"

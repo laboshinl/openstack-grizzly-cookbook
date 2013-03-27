@@ -17,3 +17,17 @@ template "/etc/ceilometer/ceilometer.conf" do
 	group "root"
 	mode "0644"
 end
+
+bash "synchronise ceilometer database" do
+	code <<-CODE
+		ceilometer-dbsync
+	CODE
+end
+
+%w[ceilometer-agent-central ceilometer-agent-compute ceilometer-api ceilometer-collector].each do |srv|
+	service srv do
+		action :restart
+	end
+end
+
+Chef::Log.info "Ceilometer install complete =)"

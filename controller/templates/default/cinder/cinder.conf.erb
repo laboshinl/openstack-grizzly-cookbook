@@ -6,7 +6,6 @@ sql_connection = mysql://root:<%= node[:admin][:password] %>@<%= node[:controlle
 api_paste_confg = /etc/cinder/api-paste.ini
 iscsi_helper = tgtadm
 volume_name_template = volume-%s
-volume_group = <%= node[:volume_group][:name] %>
 verbose = True
 auth_strategy = keystone
 state_path = /var/lib/cinder

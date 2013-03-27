@@ -5,7 +5,7 @@ bash "create database for nova" do
 		CODE
 end
 
-%w[nova-objectstore nova-conductor nova-compute nova-consoleauth nova-xvpvncproxy novnc  nova-novncproxy nova-api nova-cert nova-scheduler ].each do |pkg|
+%w[nova-objectstore nova-conductor nova-consoleauth nova-xvpvncproxy novnc nova-novncproxy nova-api nova-cert nova-scheduler ].each do |pkg|
 	package pkg do
 		action :install
 	end

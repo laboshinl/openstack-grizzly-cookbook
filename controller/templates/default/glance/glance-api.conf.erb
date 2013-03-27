@@ -226,7 +226,7 @@ swift_store_key = <%= node[:admin][:password] %>
 swift_store_container = glance
 
 # Do we create the container if it does not exist?
-swift_store_create_container_on_put = False
+swift_store_create_container_on_put = True
 
 # What size, in MB, should Glance start chunking image files
 # and do a large object manifest in Swift? By default, this is

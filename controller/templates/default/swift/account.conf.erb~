@@ -5,7 +5,7 @@ disable_fallocate = true
 bind_port = 60<%= @num %>2
 user = swift
 log_facility = LOG_LOCAL<%= @num %>
-recon_cache_path = /etc/swift
+recon_cache_path = /var/cache/swift
 
 [pipeline:main]
 pipeline = recon account-server

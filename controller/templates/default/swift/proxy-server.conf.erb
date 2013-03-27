@@ -43,7 +43,7 @@ admin_tenant_name = admin
 admin_user = admin
 admin_password = <%= node[:admin][:password] %>
 delay_auth_decision = 0
-signing_dir = /tmp/keystone-signing-swift
+signing_dir = /etc/swift
 
 [filter:keystone]
 use = egg:swift#keystoneauth

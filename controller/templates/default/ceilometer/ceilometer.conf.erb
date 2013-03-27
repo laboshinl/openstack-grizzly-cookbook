@@ -11,7 +11,7 @@ rpc_backend = ceilometer.openstack.common.rpc.impl_kombu
 periodic_interval = 60
 
 [keystone_authtoken]
-signing_dir = /var/cache/ceilometer
+signing_dir = /etc/ceilometer
 auth_protocol = http
 auth_uri = "http://localhost:5000/v2.0/"
 auth_host = localhost

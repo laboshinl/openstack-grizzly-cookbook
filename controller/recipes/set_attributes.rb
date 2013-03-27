@@ -1,2 +1,3 @@
-# Get the name of the largest Volume Group
-node.set[:volume_group][:name]=%x[vgs --sort -size --rows | grep VG -m 1 | awk '{print $2}'][0..-2]
+# Get the name of the public interface
+node.set[:controller][:public_iface]=%x[ip a | awk '/#{node[:controller][:public_ip]}/ { print $7 }'][0..-2]
+
