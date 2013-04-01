@@ -51,9 +51,11 @@ novnc_enabled=true
 novncproxy_base_url=http://<%= node[:controller][:public_ip] %>:6080/vnc_auto.html
 xvpvncproxy_base_url=http://<%= node[:controller][:public_ip] %>:6081/console
 vncserver_proxyclient_address=<%= require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} %> 
-vncserver_listen=<%= require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} %> 
+vncserver_listen=0.0.0.0
 
 # Misc #
+resume_guests_state_on_host_boot=true
+live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_TUNNELLED
 logdir=/var/log/nova
 state_path=/var/lib/nova
 lock_path=/var/lock/nova

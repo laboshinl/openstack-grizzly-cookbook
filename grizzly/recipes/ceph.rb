@@ -16,11 +16,12 @@ bash "create directories" do
 	CODE
 end
 
-bash "lvcreate" do
-	code <<-CODE
-	mkcephfs -a -c /etc/ceph/ceph.conf
-	service ceph -a restart
-	ceph osd pool create volumes 128
-	CODE
+bash "activate ceph" do
+	not_if("ls -A /var/lib/ceph/osd/ceph-0")
+		code <<-CODE
+		mkcephfs -a -c /etc/ceph/ceph.conf
+		service ceph -a restart
+		ceph osd pool create volumes 128
+		CODE
 end
 

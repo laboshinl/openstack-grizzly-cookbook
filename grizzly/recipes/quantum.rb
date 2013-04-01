@@ -27,6 +27,13 @@ bash "configure external bridge" do
 		CODE
 end
 
+template "/etc/init/openvswitch.conf" do
+	owner "root"
+	group "root"
+	mode "0644"
+	source "quantum/openvswitch.conf"
+end
+
 template "/etc/quantum/l3_agent.ini" do
 	owner "root"
 	group "quantum"
@@ -59,19 +66,6 @@ end
 	service srv do
 		action :restart
 	end
-end
-
-bash "create external network" do
-	code <<-CODE
-		source /root/adminrc.sh
-		exist=$(quantum net-list | grep -o "ext_net")
-		if [ -n "$exist" ] ; then
-			echo "Already created, doing nothing"
-		else
-			ADMIN=$(keystone tenant-list | awk '/admin/{print $2}')
-			quantum net-create --tenant-id $ADMIN ext_net --shared --router:external=True
-		fi
-	CODE
 end
 
 Chef::Log.info "Quantum installed =)"
