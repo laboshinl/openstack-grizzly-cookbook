@@ -6,7 +6,7 @@ end
 
 bash "remove ubuntu dashboard theme" do
 	code <<-CODE
-		rm /etc/openstack-dashboard/ubuntu_theme.py
+		rm -f /etc/openstack-dashboard/ubuntu_theme.py
 	CODE
 end
 

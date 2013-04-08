@@ -5,7 +5,7 @@ bash "create database for glance" do
 		CODE
 end
 
-package "glance python-ceph" do
+package "glance" do
 	action :install
 end
 

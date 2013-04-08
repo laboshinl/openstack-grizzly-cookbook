@@ -76,41 +76,51 @@ template "/etc/swift/account-server/#{num}.conf" do
   	})
 	end
 	
-bash "create rings" do
-	not_if('ifconfig | grep {node[:controller][:private_ip]}')
+bash "create rings remotely" do
+	not_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
-	ssh -oStrictHostKeyChecking=no -oCheckHostIP=no #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder add z"#{num}"-#{require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} }:60"#{num}"0/device 1'
-	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder container.builder add z"#{num}"-#{require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} }:60"#{num}"1/device 1'
-	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder account.builder add z"#{num}"-#{ require 'socket'; UDPSocket.open {|s| s.connect(node[:controller][:private_ip], 1); s.addr.last} }:60"#{num}"2/device 1'
-	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder rebalance; swift-ring-builder container.builder rebalance; swift-ring-builder account.builder rebalance'
+	ssh -oStrictHostKeyChecking=no -oCheckHostIP=no #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder add z"#{num}"-#{node[:node][:private_ip]}:60"#{num}"0/device 1'
+	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder container.builder add z"#{num}"-#{node[:node][:private_ip]}:60"#{num}"1/device 1'
+	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder account.builder add z"#{num}"-#{node[:node][:private_ip]}:60"#{num}"2/device 1'
 	CODE
 	end
 
-bash "create rings" do
-	only_if('ifconfig | grep {node[:controller][:private_ip]}')
+bash "create rings localy" do
+	only_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
 	cd /etc/swift/
 	swift-ring-builder object.builder add z"#{num}"-#{node[:controller][:private_ip]}:60"#{num}"0/device 1
 	swift-ring-builder container.builder add z"#{num}"-#{node[:controller][:private_ip]}:60"#{num}"1/device 1
 	swift-ring-builder account.builder add z"#{num}"-#{node[:controller][:private_ip]}:60"#{num}"2/device 1
-	swift-init proxy-server start
-	swift-ring-builder object.builder rebalance
-	swift-ring-builder container.builder rebalance
-	swift-ring-builder account.builder rebalance
 	CODE
 	end
 end
 
-bash "get rings" do
-	not_if('ifconfig | grep {node[:controller][:private_ip]}')
+bash "rebalance remotely" do
+	not_if("ifconfig | grep #{node[:controller][:private_ip]}")
+	ignore_failure true
 	code <<-CODE
+	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder rebalance; swift-ring-builder container.builder rebalance; swift-ring-builder account.builder rebalance'
 	scp #{node[:controller][:private_ip]}:/etc/swift/container.ring.gz /etc/swift/container.ring.gz
 	scp #{node[:controller][:private_ip]}:/etc/swift/account.ring.gz /etc/swift/account.ring.gz
 	scp #{node[:controller][:private_ip]}:/etc/swift/object.ring.gz /etc/swift/object.ring.gz
 	CODE
 end
+
+bash "rebalance localy" do
+	only_if("ifconfig | grep #{node[:controller][:private_ip]}")
+	ignore_failure true
+	code <<-CODE
+	cd /etc/swift
+	swift-ring-builder object.builder rebalance
+	swift-ring-builder container.builder rebalance
+	swift-ring-builder account.builder rebalance
+	swift-init proxy-server start
+	CODE
+end
+
 
 %x[sed -e "s/RSYNC_ENABLE=false/RSYNC_ENABLE=true/g" -i /etc/default/rsync]
 
