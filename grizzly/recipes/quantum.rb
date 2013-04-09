@@ -58,7 +58,7 @@ end
 template "/root/quantum.sh" do
 	owner "root"
 	group "root"
-	mode "0644"
+	mode "0755"
 	source "quantum/quantum.sh"
 end
 
@@ -67,5 +67,3 @@ end
 		action :restart
 	end
 end
-
-Chef::Log.info "Quantum installed =)"
