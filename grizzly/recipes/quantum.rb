@@ -62,6 +62,12 @@ template "/root/quantum.sh" do
 	source "quantum/quantum.sh"
 end
 
+bash "grant privilegies" do
+	code <<-CODE
+	echo "quantum ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	CODE
+end
+
 %w[quantum-dhcp-agent quantum-plugin-openvswitch-agent quantum-l3-agent quantum-server quantum-metadata-agent].each do |srv|
 	service srv do
 		action :restart

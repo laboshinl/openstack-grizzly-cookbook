@@ -1,9 +1,16 @@
 #! /bin/bash
+# create floating ip pool for quantum
+NETWORK="195.208.117.182/26"
+POOL_BEGIN="195.208.117.240"
+POOL_END="195.208.117.253"
+GATEWAY="195.208.117.254"
+
+source /root/adminrc.sh
 ADMIN=$(keystone tenant-list | awk '/admin/{print $2}')
-INT_NET=$(quantum net-create --tenant-id $ADMIN admin-net | awk '/ id /{print $4}')
-INT_SUBNET=$(quantum subnet-create --tenant-id $ADMIN admin-net 172.16.0.0/24 | awk '/ id /{print $4}')
-ROUTER=$(quantum router-create --tenant-id $ADMIN admin-router | awk '/ id /{print $4}')
-quantum router-interface-add $ROUTER $INT_SUBNET
-EXT_NET=$(quantum net-create --tenant-id $ADMIN ext_net --router:external=True | awk '/ id /{print $4}')
-EXT_SUBNET=$(quantum subnet-create --tenant-id $ADMIN --allocation-pool start=195.208.117.134,end=195.208.117.139 --gateway 195.208.117.158 ext_net 195.208.117.128/27 --enable_dhcp=False | awk '/ id /{print $4}')
-quantum router-gateway-set $ROUTER $EXT_NET
+exist=$(quantum net-list | grep -o "floating-pool")
+if [ -n "$exist" ] ; then
+	echo "Already exists, doing nothing"
+else
+	EXT_NET=$(quantum net-create --tenant-id $ADMIN floating-pool --router:external=True | awk '/ id /{print $4}')
+	EXT_SUBNET=$(quantum subnet-create --tenant-id $ADMIN --allocation-pool start=$POOL_BEGIN,end=$POOL_END --gateway $GATEWAY floating-pool $NETWORK --enable_dhcp=False | awk '/ id /{print $4}')
+fi

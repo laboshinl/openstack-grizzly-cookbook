@@ -10,6 +10,7 @@ rabbit_host = <%= node[:controller][:private_ip] %>
 notification_driver = quantum.openstack.common.notifier.rpc_notifier
 default_notification_level = INFO
 notification_topics = notifications
+allow_overlapping_ips = True
 
 [QUOTAS]
 

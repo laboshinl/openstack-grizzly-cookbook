@@ -33,6 +33,13 @@ template "/etc/glance/glance-api.conf" do
 	notifies :restart, resources(:service => "glance-api"), :immediately
 end
 
+template "/root/glance.sh" do
+	owner "root"
+	group "root"
+	mode "0755"
+	source "glance/glance.sh"
+end
+
 bash "synchronise glance database" do
 	code <<-CODE
 		glance-manage db_sync
