@@ -77,7 +77,7 @@ template "/etc/swift/account-server/#{num}.conf" do
 	end
 	
 bash "create rings remotely" do
-	not_if("ifconfig | grep #{node[:controller][:private_ip]}'\s'")
+	not_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
 	ssh -oStrictHostKeyChecking=no -oCheckHostIP=no #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder add z"#{num}"-#{node[:node][:private_ip]}:60"#{num}"0/device 1'
@@ -87,7 +87,7 @@ bash "create rings remotely" do
 	end
 
 bash "create rings localy" do
-	only_if("ifconfig | grep #{node[:controller][:private_ip]}'\s'")
+	only_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
 	cd /etc/swift/
@@ -99,7 +99,7 @@ bash "create rings localy" do
 end
 
 bash "rebalance remotely" do
-	not_if("ifconfig | grep #{node[:controller][:private_ip]}'\s'")
+	not_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
 	ssh #{node[:controller][:private_ip]} 'cd /etc/swift/; swift-ring-builder object.builder rebalance; swift-ring-builder container.builder rebalance; swift-ring-builder account.builder rebalance'
@@ -110,7 +110,7 @@ bash "rebalance remotely" do
 end
 
 bash "rebalance localy" do
-	only_if("ifconfig | grep #{node[:controller][:private_ip]}'\s'")
+	only_if("ifconfig | grep #{node[:controller][:private_ip]}")
 	ignore_failure true
 	code <<-CODE
 	cd /etc/swift

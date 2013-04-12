@@ -1,9 +1,18 @@
-bash "create users" do
-	not_if("id nova | grep libvirtd")
-	code <<-START
-	groupadd -g 999 nova
-	groupadd -g 997 libvirtd
-	useradd -u 998 -g 999 nova
-	gpasswd -a nova libvirtd
-	START
+user "nova" do
+	uid 997
+	action :create
 end
+
+group "nova" do
+	gid 998
+	action :create
+	members "nova"
+end
+
+group "libvirtd" do
+	gid 999
+	action :create
+	members "nova"
+end
+
+
