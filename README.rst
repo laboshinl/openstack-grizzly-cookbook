@@ -1,3 +1,5 @@
+Feel free to ask any questions and open issues
+
 Attributes
 ==========
 
