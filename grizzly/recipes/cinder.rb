@@ -5,7 +5,7 @@ bash "create database for cinder" do
 		CODE
 end
 
-%w[cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient ceph-common].each do |pkg|
+%W[cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient linux-headers-#{node[:kernel][:release]} ceph-common].each do |pkg|
 	package pkg do
 		action :install
 	end
