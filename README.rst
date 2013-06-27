@@ -58,7 +58,8 @@ Compute node.json: ::
 			"recipe[grizzly::repositories]",
 			"recipe[grizzly::openvswitch]",
 			"recipe[grizzly::libvirt]",
-			"recipe[grizzly::nova-compute]"
+			"recipe[grizzly::nova-compute]",
+			"recipe[grizzly::swift-compute]"
 			]
 	}
 
