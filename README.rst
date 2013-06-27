@@ -92,6 +92,7 @@ All in one node.json: ::
 			"recipe[grizzly::nova]",
 			"recipe[grizzly::libvirt]",
 			"recipe[grizzly::nova-compute]",
+			"recipe[grizzly::swift-compute]",
 			"recipe[grizzly::dashboard]"
 			]
 	}
